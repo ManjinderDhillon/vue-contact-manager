@@ -1,0 +1,70 @@
+{
+    "contacts":[
+        {
+            "id":"D6BNdWnHI",
+            "name": "Brad Gibson",
+            "company": "YouTube",
+            "email": "brad@gmail.com",
+            "title": "Youtuber",
+            "mobile": "9876546787",
+            "photo": "https://cdn-icons-png.flaticon.com/512/219/219988.png",
+            "GroupId": "3"
+        },
+        {
+            "id":"TVobxeKbI",
+            "name": "Glenda Kim",
+            "company": "Friend",
+            "email": "glenda@gmail.com",
+            "title": "freelancer",
+            "mobile": "8880009991",
+            "photo": "https://cdn-icons-png.flaticon.com/512/219/219988.png",
+            "GroupId": "2"
+        },
+        {
+            "id":"UyEDV5Yds",
+            "name": "Vladeen Min",
+            "company": "Service",
+            "email": "vladeen@gmail.com",
+            "title": "Electrician",
+            "mobile": "987654787",
+            "photo": "https://cdn-icons-png.flaticon.com/512/219/219988.png",
+            "GroupId": "4"
+        },
+        {
+            "id":"KLt-bjf",
+            "name": "Rajan",
+            "company": "HCL Techonlogies",
+            "email": "rajan@gmail.com",
+            "title": "Software Engineer",
+            "mobile": "987654787",
+            "photo": "https://cdn-icons-png.flaticon.com/512/219/219988.png",
+            "GroupId": "1"
+        }
+    ],
+    "groups":[
+        {
+            "id":"1",
+            "name":"Colleague"
+        },
+        {
+            "id":"2",
+            "name":"Friend"
+        },
+        {
+            "id":"3",
+            "name":"Family"
+        },
+        {
+            "id":"4",
+            "name":"Service"
+        },
+        {
+            "id":"5",
+            "name":"Comunity"
+        },
+        {
+            "id":"5",
+            "name":"Social"
+        }
+    ]
+} 
