@@ -35,32 +35,48 @@
       </div>
     </div>
   </div>
-  <div class="container mt-3">
+  <!-- Loading -->
+  <div v-if="loading">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <SpinnerComponent />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Error -->
+  <div v-if="!loading && errorMessage">
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col">
+          <p class="h4 text-danger fw-bold">{{ errorMessage }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-3" v-if="contacts.length > 0">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-6" v-for="contact of contacts" :key="contact">
         <div class="card my-2 list-group-item-success shadow-lg">
           <div class="card-body">
             <div class="row align-items-center">
               <div class="col-sm-4">
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/219/219988.png"
-                  alt=""
-                  class="contact-img"
-                />
+                <img :src="contact.photo" alt="" class="contact-img" />
               </div>
               <div class="col-sm-7">
                 <ul class="list-group">
                   <li class="list-group-item">
-                    Name : <span class="fw-bold">Name</span>
+                    Name : <span class="fw-bold">{{ contact.name }}</span>
                   </li>
                   <li class="list-group-item">
                     Email :
-                    <span class="fw-bold">Email</span>
+                    <span class="fw-bold">{{ contact.email }}</span>
                   </li>
 
                   <li class="list-group-item">
                     Mobile :
-                    <span class="fw-bold">Mobile</span>
+                    <span class="fw-bold">{{ contact.mobile }}</span>
                   </li>
                 </ul>
               </div>
@@ -90,4 +106,28 @@
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { ContactServices } from "@/services/ContactServices";
+import SpinnerComponent from "@/components/SpinnerComponent.vue";
+import { ref, onMounted } from "vue";
+
+const loading = ref(false);
+const contacts = ref([]);
+const errorMessage = ref(null);
+
+const fetchContacts = async () => {
+  try {
+    loading.value = true;
+    const response = await ContactServices.getAllContacts();
+    contacts.value = response.data;
+    loading.value = false;
+  } catch (error) {
+    errorMessage.value = error;
+    loading.value = false;
+  }
+};
+
+onMounted(() => {
+  fetchContacts();
+});
+</script>

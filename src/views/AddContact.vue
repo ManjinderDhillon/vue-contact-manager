@@ -13,28 +13,65 @@
   <div class="container mt-3">
     <div class="row">
       <div class="col-md-4">
-        <form>
+        <form @submit.prevent="submitCreate">
           <div class="mb-2">
-            <input type="text" class="form-control" placeholder="Name" />
+            <input
+              type="text"
+              class="form-control"
+              v-model="contact.name"
+              placeholder="Name"
+            />
           </div>
           <div class="mb-2">
-            <input type="text" class="form-control" placeholder="Photo URL" />
+            <input
+              type="text"
+              class="form-control"
+              v-model="contact.photo"
+              placeholder="Photo URL"
+            />
           </div>
           <div class="mb-2">
-            <input type="email" class="form-control" placeholder="Email" />
+            <input
+              type="email"
+              class="form-control"
+              v-model="contact.email"
+              placeholder="Email"
+            />
           </div>
           <div class="mb-2">
-            <input type="number" class="form-control" placeholder="Mobile" />
+            <input
+              type="number"
+              class="form-control"
+              v-model="contact.mobile"
+              placeholder="Mobile"
+            />
           </div>
           <div class="mb-2">
-            <input type="text" class="form-control" placeholder="Company" />
+            <input
+              type="text"
+              class="form-control"
+              v-model="contact.company"
+              placeholder="Company"
+            />
           </div>
           <div class="mb-2">
-            <input type="text" class="form-control" placeholder="Title" />
+            <input
+              type="text"
+              class="form-control"
+              v-model="contact.title"
+              placeholder="Title"
+            />
           </div>
           <div class="mb-2">
-            <select class="form-control">
+            <select
+              v-model="contact.groupId"
+              class="form-control"
+              v-if="groups.length > 0"
+            >
               <option value="">Select Group</option>
+              <option :value="group.id" v-for="group of groups" :key="group.id">
+                {{ group.name }}
+              </option>
             </select>
           </div>
           <div class="mb-2">
@@ -43,13 +80,45 @@
         </form>
       </div>
       <div class="col-md-4">
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/219/219986.png"
-          alt=""
-          class="contact-img"
-        />
+        <img :src="contact.photo" alt="" class="contact-img" />
       </div>
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { ContactServices } from "@/services/ContactServices";
+import { onMounted, ref, reactive } from "vue";
+const contact = reactive({
+  name: "",
+  photo: "",
+  email: "",
+  mobile: "",
+  company: "",
+  title: "",
+  groupId: "",
+});
+const groups = ref([]);
+const created = async () => {
+  try {
+    let response = await ContactServices.getAllGroup();
+    groups.value = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+const submitCreate = async () => {
+  try {
+    const response = await ContactServices.createContact(this.contact);
+    if (response) {
+      return this.$router.push("/");
+    } else {
+      return this.$router.push("/contacts/add");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+onMounted(() => {
+  created();
+});
+</script>
